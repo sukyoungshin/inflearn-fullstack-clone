@@ -1,6 +1,8 @@
 import { prisma } from "@/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import * as jwt from "jsonwebtoken";
 import NextAuth from "next-auth";
+import { JWT } from 'next-auth/jwt';
 import CredentialsProvider from "next-auth/providers/credentials";
 import { comparePassword } from "./lib/password-utils";
 
@@ -29,7 +31,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         // 2. DB에서 유저를 찾기
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: credentials.email as string },
         });
 
         // 3. 유저가 존재하지 않으면 에러 발생
@@ -38,7 +40,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
 
         // 4. 비밀번호가 일치하는지 확인
-        const passwordMatch = comparePassword(credentials.password as string, user.hashedPassword as string);
+        const passwordMatch = comparePassword(
+          credentials.password as string,
+          user.hashedPassword as string
+        );
         if (!passwordMatch) {
           throw new Error("비밀번호가 일치하지 않습니다.");
         }
@@ -50,6 +55,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  jwt: {
+    encode: async ({ secret, token }) => {
+      return jwt.sign(token as jwt.JwtPayload, secret as string);
+    },
+    decode: async ({ secret, token }) => {
+      return jwt.verify(token as string, secret as string) as JWT;
+    },
+  },
   pages: {},
-  callbacks: {}
+  callbacks: {},
 });
