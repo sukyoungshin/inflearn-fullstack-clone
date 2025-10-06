@@ -12,12 +12,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/test')
+  @Get('/user-test')
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth('access-token')
-  getTest(@Req() req: Request): string {
-    // @ts-expect-error error
-    console.log('/test req?.user', req?.user);
+  getUserTest(@Req() req: Request & { user: JwtPayload }): string {
+    console.log('/test req?.user', req.user.email);
     return 'test completed';
   }
 }
