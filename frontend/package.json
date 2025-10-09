@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "openapi:generate": "openapi-ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
@@ -64,6 +65,8 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
+    "@hey-api/client-next": "^0.5.1",
+    "@hey-api/openapi-ts": "^0.85.1",
     "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",

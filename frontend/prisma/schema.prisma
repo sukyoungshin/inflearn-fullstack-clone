@@ -83,7 +83,8 @@ model Course {
   thumbnailUrl     String?  @map("thumbnail_url")
   price            Int      @default(0)
   discountPrice    Int?     @map("discount_price")
-  level            String?  @default("BEGINNER")
+  level            String   @default("BEGINNER")
+  status           String   @default("DRAFT")
   instructorId     String   @map("instructor_id")
   isPublished      Boolean  @default(false) @map("is_published")
   createdAt        DateTime @default(now()) @map("created_at")
@@ -92,7 +93,7 @@ model Course {
   instructor        User               @relation(fields: [instructorId], references: [id])
   sections          Section[]
   lectures          Lecture[]
-  category          CourseCategory[]
+  categories        CourseCategory[]
   courseEnrollments CourseEnrollment[]
   courseReviews     CourseReview[]
   courseQuestions   CourseQuestion[]

@@ -10,7 +10,7 @@ export default async function ApiTestPage() {
     <div className="p-8">
       <h1>API 테스트</h1>
       <h2>서버 컴포넌트 API 테스트 결과: </h2>
-      <pre>{JSON.stringify(apiResult)}</pre>
+      <pre>{JSON.stringify(apiResult.data)}</pre>
 
       <ClientTest />
     </div>
