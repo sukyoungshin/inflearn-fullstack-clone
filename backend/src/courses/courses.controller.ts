@@ -14,6 +14,7 @@ import {
 import {
   ApiBearerAuth,
   ApiOkResponse,
+  ApiOperation,
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
@@ -24,7 +25,7 @@ import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/upate-course.dto';
 
-@ApiTags('courses')
+@ApiTags('Courses (코스)')
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
@@ -32,6 +33,7 @@ export class CoursesController {
   @Post()
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: '코스 생성' })
   @ApiOkResponse({
     description: '코스 생성',
     type: Course,
@@ -44,13 +46,14 @@ export class CoursesController {
   }
 
   @Get()
+  @ApiOperation({ summary: '코스 목록 조회' })
   @ApiQuery({ name: 'title', required: false })
   @ApiQuery({ name: 'level', required: false })
   @ApiQuery({ name: 'categoryId', required: false })
   @ApiQuery({ name: 'skip', required: false })
   @ApiQuery({ name: 'take', required: false })
   @ApiOkResponse({
-    description: '코스 목록',
+    description: '코스 목록 조회 성공',
     type: Course,
     isArray: true,
   })
@@ -97,8 +100,9 @@ export class CoursesController {
     required: false,
     description: 'sections, lectures, courseReviews 등 포함할 관계를 지정',
   })
+  @ApiOperation({ summary: '코스 상세 정보' })
   @ApiOkResponse({
-    description: '강의 상세 정보',
+    description: '코스 상세 정보',
     type: Course,
   })
   findOne(
@@ -113,6 +117,7 @@ export class CoursesController {
   @Patch(':id')
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: '코스 수정' })
   @ApiOkResponse({
     description: '코스 수정',
     type: Course,
@@ -128,6 +133,7 @@ export class CoursesController {
   @Delete(':id')
   @UseGuards(AccessTokenGuard)
   @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: '코스 삭제' })
   @ApiOkResponse({
     description: '코스 삭제',
     type: Course,
