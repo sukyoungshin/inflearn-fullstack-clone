@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
+import { LecturesModule } from './lectures/lectures.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SectionsModule } from './sections/sections.module';
 
@@ -15,6 +16,7 @@ import { SectionsModule } from './sections/sections.module';
     AuthModule,
     PrismaModule,
     CoursesModule,
+    LecturesModule,
     SectionsModule,
   ],
   controllers: [AppController],

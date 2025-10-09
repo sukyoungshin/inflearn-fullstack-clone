@@ -127,11 +127,11 @@ model Lecture {
   title            String
   description      String?
   order            Int
-  duration         Int
+  duration         Int?
   isPreview        Boolean  @default(false) @map("is_preview")
   sectionId        String   @map("section_id")
   courseId         String   @map("course_id")
-  videoStorageInfo Json     @map("video_storage_info")
+  videoStorageInfo Json?    @map("video_storage_info")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
