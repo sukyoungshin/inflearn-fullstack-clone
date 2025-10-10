@@ -11,7 +11,10 @@ import React from 'react';
 
 export default function SiteHeader({categories}: {categories: CourseCategory[]}) {
   const pathName = usePathname();
+  const isSiteHeaderNeeded = !pathName.includes('/course/');
   const isCategoryNeeded = pathName.includes('/courses') || pathName === '/';
+
+  if (!isSiteHeaderNeeded) return null;
 
   return (
     <header className='site-header w-full border-b bg-white'>
