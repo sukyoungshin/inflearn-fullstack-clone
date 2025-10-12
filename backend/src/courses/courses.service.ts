@@ -17,13 +17,21 @@ export class CoursesService {
     userId: string,
     createCourseDto: CreateCourseDto,
   ): Promise<Course> {
-    console.log('create course.service >> ', createCourseDto);
+    // 코스 제목으로 슬러그 생성
+    const baseSlug = slugify(createCourseDto.title);
+    let slug = baseSlug;
+    let counter = 1;
+
+    // Check if slug already exists and generate unique one
+    while (await this.prisma.course.findUnique({ where: { slug } })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
 
     return this.prisma.course.create({
       data: {
         title: createCourseDto.title,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        slug: slugify(createCourseDto.title),
+        slug,
         instructorId: userId,
         status: 'DRAFT',
       },
@@ -48,17 +56,13 @@ export class CoursesService {
     });
   }
 
-  async findOne(id: string, include?: string[]): Promise<Course | null> {
-    const includeObject: Prisma.CourseInclude = {};
-    if (include) {
-      include.forEach((item) => {
-        includeObject[item] = true;
-      });
-    }
-
+  async findOne(
+    id: string,
+    include?: Prisma.CourseInclude,
+  ): Promise<Course | null> {
     return this.prisma.course.findUnique({
       where: { id },
-      include: include && include.length > 0 ? includeObject : undefined,
+      include,
     });
   }
 
