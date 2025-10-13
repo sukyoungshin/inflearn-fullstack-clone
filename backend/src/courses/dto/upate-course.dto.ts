@@ -1,7 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsArray,
-  IsBoolean,
   IsNumber,
   IsOptional,
   IsString,
@@ -14,6 +13,11 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
   @IsString()
   @IsOptional()
   shortDescription?: string;
+
+  @ApiProperty({ description: '코스 상태', required: false })
+  @IsString()
+  @IsOptional()
+  status?: string;
 
   @ApiProperty({ description: '코스 상세 설명', required: false })
   @IsString()
@@ -38,11 +42,6 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
   @IsString()
   @IsOptional()
   level?: string;
-
-  @ApiProperty({ description: '코스 발행 여부', required: false })
-  @IsBoolean()
-  @IsOptional()
-  isPublished?: boolean;
 
   @ApiProperty({ description: '코스 카테고리 ID 목록', required: false })
   @IsArray()
