@@ -1,10 +1,10 @@
-import { auth, signOut } from "@/auth";
-import Link from "next/link";
+import {auth, signOut} from '@/auth';
+import Link from 'next/link';
 
 export default async function Home() {
   const session = await auth();
 
-  console.log("session >> ", session);
+  console.log('session >> ', session);
 
   return (
     <div>
@@ -15,13 +15,13 @@ export default async function Home() {
       {session ? (
         <SignOutButton />
       ) : (
-        <div className="max-w-md">
-        <Link
-          href="/signin"
-          className="bg-blue-400 text-white p-2 w-full text-center block rounded-md hover:bg-blue-600"
-        >
-          로그인
-        </Link>
+        <div className='max-w-md'>
+          <Link
+            href='/signin'
+            className='bg-blue-400 text-white p-2 w-full text-center block rounded-md hover:bg-blue-600'
+          >
+            로그인
+          </Link>
         </div>
       )}
     </div>
@@ -32,15 +32,12 @@ export function SignOutButton() {
   return (
     <form
       action={async () => {
-        "use server";
+        'use server';
         await signOut();
       }}
-      className="max-w-md"
+      className='max-w-md'
     >
-      <button
-        type="submit"
-        className="bg-red-400 text-white p-2 w-full rounded-md hover:bg-red-600"
-      >
+      <button type='submit' className='bg-red-400 text-white p-2 w-full rounded-md hover:bg-red-600'>
         로그아웃
       </button>
     </form>

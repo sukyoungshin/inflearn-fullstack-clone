@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
 
 // 비밀번호 해싱
 export function saltAndHashPassword(password: string): string {
