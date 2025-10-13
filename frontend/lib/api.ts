@@ -9,6 +9,7 @@ import {
   lecturesControllerCreate,
   lecturesControllerDelete,
   lecturesControllerUpdate,
+  mediaControllerUploadFile,
   sectionsControllerCreate,
   sectionsControllerDelete,
   sectionsControllerUpdate,
@@ -163,6 +164,19 @@ export const updateLecturePreview = async (lectureId: string, isPreview: boolean
     },
     body: {
       isPreview,
+    },
+  });
+
+  return {data, error};
+};
+
+/**
+ * Media API
+ */
+export const uploadMedia = async (file: File) => {
+  const {data, error} = await mediaControllerUploadFile({
+    body: {
+      file,
     },
   });
 

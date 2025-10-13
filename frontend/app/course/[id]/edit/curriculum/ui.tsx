@@ -1,5 +1,6 @@
 'use client';
 
+import {EditLectureDialog} from '@/app/course/[id]/edit/curriculum/__components/edit-lecture-dialog';
 import {Button} from '@/components/ui/button';
 import {Card, CardHeader, CardTitle} from '@/components/ui/card';
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog';
@@ -21,6 +22,9 @@ export default function UI({initialCourse}: {initialCourse: Course}) {
   const [lectureDialogOpen, setLectureDialogOpen] = useState(false);
   // 섹션별 임시 제목 상태
   const [sectionTitles, setSectionTitles] = useState<Record<string, string>>({});
+  // 강의 수정 Dialog 상태
+  const [editLecture, setEditLecture] = useState<Lecture | null>(null);
+  const [isEditLectureDialogOpen, setIsEditLectureDialogOpen] = useState(false);
 
   // 코스 데이터 조회
   const {data: course} = useQuery<Course>({
@@ -252,7 +256,8 @@ export default function UI({initialCourse}: {initialCourse: Course}) {
                     variant='ghost'
                     size='icon'
                     onClick={() => {
-                      // TODO: 강의 수정 Dialog
+                      setEditLecture(lecture);
+                      setIsEditLectureDialogOpen(true);
                     }}
                     aria-label='강의 수정'
                   >
@@ -318,6 +323,18 @@ export default function UI({initialCourse}: {initialCourse: Course}) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* 강의 수정 Dialog */}
+      {editLecture && (
+        <EditLectureDialog
+          isOpen={isEditLectureDialogOpen}
+          onClose={() => {
+            setIsEditLectureDialogOpen(false);
+            setEditLecture(null);
+          }}
+          lecture={editLecture}
+        />
+      )}
     </div>
   );
 }
