@@ -1,15 +1,18 @@
 'use client';
 import {CATEGORY_ICONS} from '@/app/constants/category-icons';
+import {signOut} from '@/auth';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
-import {CourseCategory} from '@/generated/openapi-client';
+import {CourseCategory, User} from '@/generated/openapi-client';
+import {Popover, PopoverContent, PopoverTrigger} from '@radix-ui/react-popover';
 import {Search} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import React from 'react';
+import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar';
 
-export default function SiteHeader({categories}: {categories: CourseCategory[]}) {
+export default function SiteHeader({categories, profile}: {categories: CourseCategory[]; profile?: User | null}) {
   const pathName = usePathname();
   const isSiteHeaderNeeded = !pathName.includes('/course/');
   const isCategoryNeeded = pathName.includes('/courses') || pathName === '/';
@@ -74,7 +77,59 @@ export default function SiteHeader({categories}: {categories: CourseCategory[]})
             지식공유자
           </Button>
         </Link>
+
+        {/* 프로필 + Popover or 로그인 버튼 */}
+        {true ? (
+          <Popover>
+            <PopoverTrigger asChild>
+              <div className='ml-2 cursor-pointer'>
+                <Avatar>
+                  <AvatarImage
+                    src={profile?.image || ''}
+                    alt='avatar'
+                    className='w-full h-full object-cover rounded-full'
+                  />
+                  <AvatarFallback>{profile?.name?.charAt(0) || 'ㅇ'}</AvatarFallback>
+                </Avatar>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent align='end' className='w-56 p-0 bg-white border border-gray-200 rounded-md'>
+              <div className='px-4 py-3 border-b border-gray-100'>
+                <div className='font-semibold text-gray-800'>{profile?.name || profile?.email || '내 계정'}</div>
+                {profile?.email && <div className='text-xs text-gray-500 mt-1'>{profile.email}</div>}
+              </div>
+              <button
+                type='button'
+                role='button'
+                className='w-full text-left px-4 py-3 hover:bg-gray-100 focus:outline-none'
+                onClick={() => (window.location.href = '/my/settings/account')}
+              >
+                <div className='font-semibold text-gray-800'>프로필 수정</div>
+              </button>
+              <button
+                type='button'
+                role='button'
+                className='w-full text-left px-4 py-3 hover:bg-gray-100 focus:outline-none border-t border-gray-100'
+                onClick={() => signOut()}
+              >
+                <div className='font-semibold text-gray-800'>로그아웃</div>
+              </button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Link href='/signin'>
+            <Button
+              role='button'
+              type='button'
+              variant='outline'
+              className='font-semibold border-gray-200 hover:border-[#1dc078] hover:text-[#1dc078] ml-2'
+            >
+              로그인
+            </Button>
+          </Link>
+        )}
       </div>
+
       {/* 하단 카테고리 */}
       <div className='header-bottom bg-white px-8'>
         {isCategoryNeeded && (
