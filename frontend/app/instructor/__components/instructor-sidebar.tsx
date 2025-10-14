@@ -1,6 +1,7 @@
 'use client';
 
 import {Button} from '@/components/ui/button';
+import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
 const sidebarItems = [
@@ -68,7 +69,7 @@ export default function InstructorSidebar() {
             onClick={isPreparing ? alertPreparing : undefined}
             asChild={!isPreparing}
           >
-            {isPreparing ? <span>{item.label}</span> : <a href={item.href}>{item.label}</a>}
+            {isPreparing ? <span>{item.label}</span> : <Link href={item.href}>{item.label}</Link>}
           </Button>
         );
       })}

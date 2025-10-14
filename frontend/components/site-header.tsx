@@ -1,18 +1,27 @@
 'use client';
 import {CATEGORY_ICONS} from '@/app/constants/category-icons';
-import {signOut} from '@/auth';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {CourseCategory, User} from '@/generated/openapi-client';
 import {Popover, PopoverContent, PopoverTrigger} from '@radix-ui/react-popover';
 import {Search} from 'lucide-react';
+import {Session} from 'next-auth';
+import {signOut} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import React from 'react';
 import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar';
 
-export default function SiteHeader({categories, profile}: {categories: CourseCategory[]; profile?: User | null}) {
+export default function SiteHeader({
+  session,
+  profile,
+  categories,
+}: {
+  session: Session | null;
+  profile?: User | null;
+  categories: CourseCategory[];
+}) {
   const pathName = usePathname();
   const isSiteHeaderNeeded = !pathName.includes('/course/');
   const isCategoryNeeded = pathName.includes('/courses') || pathName === '/';
@@ -72,14 +81,14 @@ export default function SiteHeader({categories, profile}: {categories: CourseCat
           <Button
             role='button'
             variant='outline'
-            className='font-semibold border-gray-200 hover:border-[#1dc078] hover:text-[#1dc078]'
+            className='font-semibold !text-black border-gray-200 hover:border-[#1dc078] hover:text-[#1dc078]'
           >
             지식공유자
           </Button>
         </Link>
 
         {/* 프로필 + Popover or 로그인 버튼 */}
-        {true ? (
+        {session ? (
           <Popover>
             <PopoverTrigger asChild>
               <div className='ml-2 cursor-pointer'>
@@ -106,14 +115,15 @@ export default function SiteHeader({categories, profile}: {categories: CourseCat
               >
                 <div className='font-semibold text-gray-800'>프로필 수정</div>
               </button>
-              <button
+              <Button
                 type='button'
                 role='button'
+                variant='outline'
                 className='w-full text-left px-4 py-3 hover:bg-gray-100 focus:outline-none border-t border-gray-100'
                 onClick={() => signOut()}
               >
                 <div className='font-semibold text-gray-800'>로그아웃</div>
-              </button>
+              </Button>
             </PopoverContent>
           </Popover>
         ) : (
@@ -133,7 +143,7 @@ export default function SiteHeader({categories, profile}: {categories: CourseCat
       {/* 하단 카테고리 */}
       <div className='header-bottom bg-white px-8'>
         {isCategoryNeeded && (
-          <nav className='category-nav flex gap-6 py-4 overflow-x-auto scrollbar-none'>
+          <nav className='category-nav flex items-center justify-center gap-6 py-4 overflow-x-auto scrollbar-none'>
             {categories.map(category => (
               <Link key={category.id} href={`/courses/${category.slug}`}>
                 <div className='category-item flex flex-col items-center min-w-[72px] text-gray-700 hover:text-[#1dc078] cursor-pointer transition-colors'>

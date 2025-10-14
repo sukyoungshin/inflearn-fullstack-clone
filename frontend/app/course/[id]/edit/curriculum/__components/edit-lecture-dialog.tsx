@@ -110,7 +110,7 @@ export function EditLectureDialog({isOpen, onClose, lecture}: EditLectureDialogP
 
             {/* 권장 영상 형식 안내 */}
             <p className='text-sm text-gray-500 mb-2'>
-              • 최대 파일 크기: 5GB
+              • 최대 파일 크기: {MAX_FILE_SIZE / 1024 / 1024}MB
               <br />
               • 지원 형식: .mp4, .mkv, .m4v, .mov
               <br />• 최소 해상도: 1080p 이상 (권장)

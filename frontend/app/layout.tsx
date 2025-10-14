@@ -1,3 +1,4 @@
+import {auth} from '@/auth';
 import SiteHeader from '@/components/site-header';
 import Providers from '@/config/providers';
 import * as api from '@/lib/api';
@@ -26,14 +27,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const profile = await api.getProfile();
-  const categories = await api.getAllCategories();
+  const [session, profile, categories] = await Promise.all([auth(), api.getProfile(), api.getAllCategories()]);
 
   return (
     <html lang='en'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
-          <SiteHeader profile={profile.data} categories={categories.data || []} />
+          <SiteHeader session={session} profile={profile.data} categories={categories.data || []} />
           {children}
         </Providers>
         <Toaster position='bottom-center' />

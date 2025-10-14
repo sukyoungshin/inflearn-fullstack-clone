@@ -9,7 +9,7 @@ import {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import {toast} from 'sonner';
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
 const ACCEPTED_IMAGE_TYPES = {
   'image/jpeg': ['.jpg', '.jpeg'],
   'image/png': ['.png'],
@@ -82,7 +82,7 @@ export default function UI({course}: {course: Course}) {
 
         {/* 권장 이미지 형식 안내 */}
         <p className='text-sm text-gray-500 mb-2'>
-          • 최대 파일 크기: 3MB
+          • 최대 파일 크기: {MAX_FILE_SIZE / 1024 / 1024}MB
           <br />
           • 지원 형식: .jpg, .jpeg, .png, .gif
           <br />• 권장 해상도: 1200 x 781px

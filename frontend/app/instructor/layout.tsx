@@ -6,7 +6,7 @@ export default function InstructorLayout({children}: {children: React.ReactNode}
     <div className='flex flex-col'>
       {/* 제목 */}
       <InstructorPageName />
-      <div className='flex w-6xl mx-auto'>
+      <div className='flex'>
         <InstructorSidebar />
         {children}
       </div>
