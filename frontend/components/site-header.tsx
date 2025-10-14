@@ -46,16 +46,16 @@ export default function SiteHeader({
         </div>
         {/* 네비게이션 */}
         <nav className='main-nav flex gap-6 text-base font-bold text-gray-700'>
-          <Link href='#' className='hover:text-[#1dc078] transition-colors'>
+          <Link href='/course' className='hover:text-[#1dc078] transition-colors'>
             강의
           </Link>
-          <Link href='#' className='hover:text-[#1dc078] transition-colors'>
+          <Link href='/roadmap' className='hover:text-[#1dc078] transition-colors'>
             로드맵
           </Link>
-          <Link href='#' className='hover:text-[#1dc078] transition-colors'>
+          <Link href='/mentoring' className='hover:text-[#1dc078] transition-colors'>
             멘토링
           </Link>
-          <Link href='#' className='hover:text-[#1dc078] transition-colors'>
+          <Link href='/community' className='hover:text-[#1dc078] transition-colors'>
             커뮤니티
           </Link>
         </nav>
