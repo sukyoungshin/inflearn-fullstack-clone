@@ -3,12 +3,34 @@
 import {Button} from '@/components/ui/button';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import {Course} from '@/generated/openapi-client';
+import * as api from '@/lib/api';
+import {useMutation} from '@tanstack/react-query';
 import {Pencil, X} from 'lucide-react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
+import {toast} from 'sonner';
 
 export default function UI({courses}: {courses: Course[]}) {
   const router = useRouter();
+
+  const {mutate: deleteCourseMutation} = useMutation({
+    mutationFn: (courseId: string) => {
+      return api.deleteCourse(courseId);
+    },
+    onSuccess: () => {
+      toast.success('강의가 삭제되었습니다.');
+      router.refresh();
+    },
+    onError: () => {
+      toast.error('강의 삭제에 실패했습니다.');
+    },
+  });
+
+  const handleDeleteCourse = (courseId: string) => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      deleteCourseMutation(courseId);
+    }
+  };
 
   return (
     <div className='w-full p-6'>
@@ -68,13 +90,11 @@ export default function UI({courses}: {courses: Course[]}) {
                   <TableCell>{status}</TableCell>
                   <TableCell className='flex flex-col gap-2 justify-center h-full'>
                     <Button
+                      type='button'
                       role='button'
-                      onClick={() => {
-                        const confirmed = window.confirm('정말 삭제하시겠습니까?');
-                        console.log(confirmed);
-                      }}
                       variant='destructive'
                       size='sm'
+                      onClick={() => handleDeleteCourse(course.id)}
                     >
                       <X className='w-4 h-4 mr-1' /> 강의 삭제
                     </Button>
