@@ -4,8 +4,6 @@ import Link from 'next/link';
 export default async function Home() {
   const session = await auth();
 
-  console.log('session >> ', session);
-
   return (
     <div>
       <h1>로그인 한 유저 보여주기</h1>

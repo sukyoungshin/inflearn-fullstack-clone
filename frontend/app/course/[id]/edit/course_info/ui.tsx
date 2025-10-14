@@ -42,7 +42,6 @@ export default function EditCourseInfoUI({course}: {course: Course}) {
 
   const {mutate: updateCourseMutation} = useMutation({
     mutationFn: (data: FormValues) => {
-      console.log('mutationFn >> ', data);
       return api.updateCourse(course.id, {
         ...data,
         price: parseInt(data.price),

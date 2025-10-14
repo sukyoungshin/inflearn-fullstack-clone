@@ -77,8 +77,6 @@ export default function UI({profile}: {profile: User}) {
     updateProfileMutation();
   };
 
-  console.log({image, name, bio});
-
   return (
     <div className='max-w-xl mx-auto bg-white p-8 rounded-lg mt-10 shadow'>
       <h2 className='text-2xl font-bold mb-6'>계정 설정</h2>

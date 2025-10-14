@@ -15,9 +15,7 @@ export default function UI() {
   const {mutate: createCourseMutation} = useMutation({
     mutationFn: () => api.createCourse(title),
     onSuccess: res => {
-      console.log('onSuccess >> ', res);
       if (res.data) {
-        console.log('onSuccess res.data >> ', res.data);
         toast.success('코스가 생성되었습니다.', {
           action: {
             label: '이동하기',

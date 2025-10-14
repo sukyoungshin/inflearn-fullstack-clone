@@ -47,7 +47,6 @@ export default function UI({course}: {course: Course}) {
     async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
       if (file) {
-        console.log('파일 >> ', file);
         setThumbnailUrl(URL.createObjectURL(file)); // TODO
         updateCourseThumbnailMutation(file);
       }

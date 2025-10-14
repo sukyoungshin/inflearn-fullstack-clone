@@ -125,7 +125,6 @@ export default function UI({initialCourse}: {initialCourse: Course}) {
 
   // UI 핸들러
   const handleAddSection = () => {
-    console.log('handleAddSection');
     addSectionMutation('섹션 제목을 작성해주세요');
   };
 
@@ -153,7 +152,6 @@ export default function UI({initialCourse}: {initialCourse: Course}) {
   const {mutate: toggleLecturePreviewMutation} = useMutation({
     mutationFn: async (lecture: Lecture) => {
       const {data, error} = await api.updateLecturePreview(lecture.id, !lecture.isPreview);
-      console.log(data, error);
       if (error) {
         toast.error(error as string);
         return null;

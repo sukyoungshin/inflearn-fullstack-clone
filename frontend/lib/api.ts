@@ -74,7 +74,6 @@ export const createCourse = async (title: string) => {
 };
 
 export const updateCourse = async (id: string, updateCourseDto: UpdateCourseDto) => {
-  console.log('updateCourseDto', updateCourseDto);
   const {data, error} = await coursesControllerUpdate({
     path: {
       id,

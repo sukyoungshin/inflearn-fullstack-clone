@@ -13,12 +13,13 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { AccessTokenGuard } from 'src/auth/guards/access-token.guard';
 import { MediaService } from './media.service';
 
-@ApiTags('Media')
+@ApiTags('Media (미디어)')
 @Controller('media')
 export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
@@ -48,6 +49,7 @@ export class MediaController {
       },
     },
   })
+  @ApiOperation({ summary: '미디어 업로드' })
   @ApiOkResponse({
     description: '미디어 업로드 결과 (videoStorageInfo)',
   })

@@ -137,8 +137,7 @@ export default function SiteHeader({categories, profile}: {categories: CourseCat
             {categories.map(category => (
               <Link key={category.id} href={`/courses/${category.slug}`}>
                 <div className='category-item flex flex-col items-center min-w-[72px] text-gray-700 hover:text-[#1dc078] cursor-pointer transition-colors'>
-                  {/* <Layers size={28} className="mb-1" /> */}
-                  {React.createElement(CATEGORY_ICONS[category.slug] || CATEGORY_ICONS['default'], {
+                  {React.createElement(CATEGORY_ICONS[category.slug || 'default'], {
                     size: 28,
                     className: 'mb-1',
                   })}
